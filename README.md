@@ -43,13 +43,21 @@ git clone https://github.com/AhmedESamy/ci_server/
 cd ci-server
 ```
 
-### **2. Build docker container
+### **2. Build docker container**
 ```sh
 
 ```
 
-### **3. Set .env file configs
+### **3. Set .env file configs**
 Inside .env file configure the url of the repo you want to test as well as other environment variables
+
+### **4. Create and set .token file**
+The `.token` file will contain the access token needed to authorize updating the commit status on GitHub. 
+It should be located in the base folder.
+Instructions on creating a token file can be found [here](https://github.com/settings/tokens). 
+If you're using a fine-grained token, it needs to be given "write" access to "Commit statuses".
+
+NOTE: The token is secret to you. DO NOT PUSH IT. It has been added to the `.gitignore` for this reason.
 
 ## Running the CI Server
 ```sh
