@@ -1,5 +1,6 @@
 import logging
 from flask import Flask, request, jsonify
+from pathlib import Path
 import system_routines, notifier
 
 # Initialize Flask app for webhook handling
@@ -15,11 +16,12 @@ def updatehandler():
     """Run tests"""
     # system_routines.clone_and_run(data)
     # Notify users
+    token_path = Path(__file__).parent / "../.token"
     notifier.send_notification("success", 
                                data['repository']['full_name'],
                                 # This only checks latest commit in a push
                                data['head_commit']['id'],
-                               open("/mnt/s/year4/swe/ci_server/.token", "r").read(),
+                               open(token_path, "r").read(),
                                None) 
     
     
