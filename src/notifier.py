@@ -19,7 +19,7 @@ def send_commit_status(repo, commit_sha, status, token):
         description = "CI build in progress..."
 
     headers = {
-        "Authorization": f"token {token}",
+        "Authorization": f"Bearer {token}",
         "Accept": "application/vnd.github.v3+json"
     }
 
@@ -63,30 +63,30 @@ def send_notification(status, repo=None, commit_sha=None, token=None, email_conf
     logging.info(f"Processing notification with status: {status}")
     
     # Send commit status update if repository details are provided
-    if repo and commit_sha and token:
-        send_commit_status(repo, commit_sha, status, token)
+    #if repo and commit_sha and token:
+    send_commit_status(repo, commit_sha, status, token)
     
-    # Send email notification if email configuration is provided
-    if email_config:
-        message = f"""
-CI Build Notification
-
-Status: {status}
-Repository: {repo}
-Commit: {commit_sha}
-
-For more details, please check the repository.
-"""
-        
-        try:
-            send_email_notification(
-                recipient=email_config.get("recipient"),
-                subject=f"CI Build Status: {status}",
-                message=message,
-                smtp_server=email_config.get("smtp_server"),
-                smtp_port=email_config.get("smtp_port"),
-                sender_email=email_config.get("sender_email"),
-                sender_password=email_config.get("sender_password")
-            )
-        except Exception as e:
-            logging.error(f"Failed to send email notification: {str(e)}")
+#     # Send email notification if email configuration is provided
+#     if email_config:
+#         message = f"""
+# CI Build Notification
+# 
+# Status: {status}
+# Repository: {repo}
+# Commit: {commit_sha}
+# 
+# For more details, please check the repository.
+# """
+#         
+#         try:
+#             send_email_notification(
+#                 recipient=email_config.get("recipient"),
+#                 subject=f"CI Build Status: {status}",
+#                 message=message,
+#                 smtp_server=email_config.get("smtp_server"),
+#                 smtp_port=email_config.get("smtp_port"),
+#                 sender_email=email_config.get("sender_email"),
+#                 sender_password=email_config.get("sender_password")
+#             )
+#         except Exception as e:
+#             logging.error(f"Failed to send email notification: {str(e)}")

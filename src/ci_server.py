@@ -1,6 +1,6 @@
 import logging
 from flask import Flask, request, jsonify
-import system_routines
+import system_routines, notifier
 
 # Initialize Flask app for webhook handling
 app = Flask(__name__)
@@ -13,7 +13,15 @@ def updatehandler():
     
     
     """Run tests"""
-    system_routines.clone_and_run(data)
+    # system_routines.clone_and_run(data)
+    # Notify users
+    notifier.send_notification("success", 
+                               data['repository']['full_name'],
+                                # This only checks latest commit in a push
+                               data['head_commit']['id'],
+                               open("/mnt/s/year4/swe/ci_server/.token", "r").read(),
+                               None) 
+    
     
     return jsonify({"message": "Received update, running tests"}), 200
 
