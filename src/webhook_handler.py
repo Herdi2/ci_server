@@ -8,7 +8,7 @@ import pylint.reporters.text as lint_report
 import pylint.lint as lint
 from contextlib import redirect_stdout, redirect_stderr
 
-import testinfo, notifier
+import testinfo, notifier, history
 
 def clone_project_upon_push_and_test(payload):
     branch_name = '/'.join((payload["ref"]).split('/')[2:])
@@ -33,7 +33,7 @@ def handle_push_event(payload, token):
     # Test the project and gather results
     repo = clone_project_upon_push_and_test(payload)
     test_results = tests_and_compiles_on_push(payload, repo)
-    
+    history.write_to_history(test_results)
     for test_info in test_results:
         try:
             notifier.send_commit_status(repo=payload['repository']['full_name'],
