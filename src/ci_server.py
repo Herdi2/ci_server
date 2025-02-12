@@ -1,6 +1,7 @@
 import logging
 from flask import Flask, request, jsonify
 from pathlib import Path
+import history
 import webhook_handler as handler
 
 # Initialize Flask app for webhook handling
@@ -21,8 +22,10 @@ def handle_webhook():
         handler.handle_push_event(data, open(token_path, "r").read())
     
     return jsonify({"message": "Received update, running tests"}), 200
-
-
+@app.route("/history")
+def show_history():
+    data = history.read_history()
+    
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)

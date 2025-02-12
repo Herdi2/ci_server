@@ -18,5 +18,5 @@ class testInfo:
         return [self.commit_id, 
                 self.passed_pylint, 
                 self.passed_test,
-                self.pylint_output,
-                self.pytest_output]
+                self.pylint_output.replace("\n", ":"),
+                self.pytest_output.replace("\n", ":")]
